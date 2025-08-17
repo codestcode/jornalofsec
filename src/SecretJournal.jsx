@@ -80,7 +80,6 @@ const literaryQuotes = [
   { text: "The only journey is the one within.", author: "Rainer Maria Rilke" }
 ];
 
-
 // Storage helpers
 const STORAGE_KEY = "lus_journal_entries";
 const SETTINGS_KEY = "lus_journal_settings";
@@ -284,18 +283,18 @@ function LUs() {
 
   // Typewriter effect
   useEffect(() => {
-    const texts = ["LU's Lounge",  "Welcome back, Lu — the silence has been restless.","LU's Lounge", ];
+    const texts = ["LU's Lounge", "Welcome back, Lu — the silence has been restless.", "LU's Lounge"];
     let textIndex = 0;
     let charIndex = 0;
     let isDeleting = false;
-    
+
     const typewriter = () => {
       const currentText = texts[textIndex];
-      
+
       if (isDeleting) {
         setTypewriterText(currentText.substring(0, charIndex - 1));
         charIndex--;
-        
+
         if (charIndex === 0) {
           isDeleting = false;
           textIndex = (textIndex + 1) % texts.length;
@@ -303,7 +302,7 @@ function LUs() {
       } else {
         setTypewriterText(currentText.substring(0, charIndex + 1));
         charIndex++;
-        
+
         if (charIndex === currentText.length) {
           setTimeout(() => {
             isDeleting = true;
@@ -342,7 +341,7 @@ function LUs() {
       alert('Please fill in title, content, and passphrase.');
       return;
     }
-    
+
     const encrypted = simpleEncrypt(content, passphrase.trim());
     const entry = {
       id: generateId(),
@@ -353,7 +352,7 @@ function LUs() {
       encrypted: encrypted,
       wordCount: content.trim().split(/\s+/).length
     };
-    
+
     const newEntries = [entry, ...entries];
     setEntries(newEntries);
     saveEntries(newEntries); // Force immediate save
@@ -453,59 +452,59 @@ function LUs() {
         ))}
       </div>
 
-      <div className="relative z-10 container mx-auto px-6 py-8">
+      <div className="relative z-10 container mx-auto px-4 sm:px-6 py-6 sm:py-8">
         {/* Save Notification */}
         {saveMessage && (
-          <div className="fixed top-4 right-4 bg-[#3C4F2F]/80 backdrop-blur-sm text-[#F5E6CC] px-4 py-2 rounded-xl shadow-[0_4px_15px_rgba(0,0,0,0.3)] transition-all duration-400">
+          <div className="fixed top-4 right-4 bg-[#3C4F2F]/80 backdrop-blur-sm text-[#F5E6CC] px-3 py-2 rounded-xl shadow-[0_4px_15px_rgba(0,0,0,0.3)] transition-all duration-400 text-sm sm:text-base">
             {saveMessage}
           </div>
         )}
 
         {/* Header */}
-        <header className="text-center mb-12">
-          <h1 className="text-5xl md:text-7xl font-bold mb-4 tracking-wide">
-          <span className="bg-gradient-to-r from-[#D4A017] via-[#B8860B] to-[#6B4226] bg-clip-text text-transparent">
-          {typewriterText}
+        <header className="text-center mb-8 sm:mb-12">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 tracking-wide">
+            <span className="bg-gradient-to-r from-[#D4A017] via-[#B8860B] to-[#6B4226] bg-clip-text text-transparent">
+              {typewriterText}
             </span>
             <span className="animate-pulse">|</span>
           </h1>
-          
-          <div className="max-w-2xl mx-auto mb-8">
-            <blockquote className="text-lg md:text-xl italic opacity-80 transform transition-all duration-1000">
+
+          <div className="max-w-xl sm:max-w-2xl mx-auto mb-6 sm:mb-8">
+            <blockquote className="text-base sm:text-lg md:text-xl italic opacity-80 transform transition-all duration-1000">
               "{literaryQuotes[currentQuote].text}"
             </blockquote>
-            <cite className="block mt-2 text-sm opacity-60">
+            <cite className="block mt-2 text-xs sm:text-sm opacity-60">
               — {literaryQuotes[currentQuote].author}
             </cite>
           </div>
         </header>
 
         {/* Controls */}
-        <div className="flex flex-col lg:flex-row gap-4 mb-8 items-center justify-between">
-          <div className="flex items-center gap-4">
+        <div className="flex flex-col gap-4 mb-6 sm:mb-8">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-4">
             <button
               onClick={() => setShowModal(true)}
-              className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#4A1C2A] to-[#3C4F2F] rounded-xl text-[#F5E6CC] font-medium hover:from-[#3C2F2F] hover:to-[#2A3D1F] transition-all duration-400 transform hover:scale-105 shadow-[0_4px_15px_rgba(0,0,0,0.3)]"
+              className="flex items-center gap-2 px-4 py-2 sm:px-6 sm:py-3 bg-gradient-to-r from-[#4A1C2A] to-[#3C4F2F] rounded-xl text-[#F5E6CC] font-medium hover:from-[#3C2F2F] hover:to-[#2A3D1F] transition-all duration-400 transform hover:scale-105 shadow-[0_4px_15px_rgba(0,0,0,0.3)]"
             >
               <PenIcon />
               New Verse
             </button>
-            
+
             <div className="relative">
               <button
                 onClick={() => setDropdownOpen(dropdownOpen === "settings" ? null : "settings")}
-                className="p-3 bg-[#2A1B1A]/70 backdrop-blur-sm rounded-xl hover:bg-[#2A1B1A]/90 transition-all duration-400 shadow-[0_4px_15px_rgba(0,0,0,0.3)]"
+                className="p-2 sm:p-3 bg-[#2A1B1A]/70 backdrop-blur-sm rounded-xl hover:bg-[#2A1B1A]/90 transition-all duration-400 shadow-[0_4px_15px_rgba(0,0,0,0.3)]"
               >
                 <SettingsIcon />
               </button>
-              
+
               {dropdownOpen === "settings" && (
-                <div className="absolute top-full mt-2 left-0 bg-[#2A1B1A]/80 backdrop-blur-md border border-[#D4A017]/50 rounded-xl p-4 min-w-[240px] z-50 shadow-[0_4px_15px_rgba(0,0,0,0.3)]">
+                <div className="absolute top-full mt-2 left-0 bg-[#2A1B1A]/80 backdrop-blur-md border border-[#D4A017]/50 rounded-xl p-3 sm:p-4 min-w-[200px] sm:min-w-[240px] z-50 shadow-[0_4px_15px_rgba(0,0,0,0.3)]">
                   <div className="space-y-4">
                     <div>
-                      <label className="block text-sm font-medium mb-2">Theme</label>
+                      <label className="block text-xs sm:text-sm font-medium mb-2">Theme</label>
                       <div className="space-y-2">
-                        <label className="flex items-center">
+                        <label className="flex items-center text-sm">
                           <input
                             type="radio"
                             name="theme"
@@ -516,7 +515,7 @@ function LUs() {
                           />
                           Martini
                         </label>
-                        <label className="flex items-center">
+                        <label className="flex items-center text-sm">
                           <input
                             type="radio"
                             name="theme"
@@ -529,11 +528,11 @@ function LUs() {
                         </label>
                       </div>
                     </div>
-                    
+
                     <div>
                       <button
                         onClick={() => setSettings(s => ({ ...s, blurPreview: !s.blurPreview }))}
-                        className="flex items-center w-full text-left hover:bg-[#3C4F2F]/40 rounded-lg p-2 transition-all duration-400"
+                        className="flex items-center w-full text-left hover:bg-[#3C4F2F]/40 rounded-lg p-2 transition-all duration-400 text-sm"
                       >
                         {settings.blurPreview ? <EyeOffIcon /> : <EyeIcon />}
                         <span className="ml-2">Blur content preview</span>
@@ -545,29 +544,29 @@ function LUs() {
             </div>
           </div>
 
-          <div className="flex items-center gap-2 flex-wrap">
-            <div className="relative">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+            <div className="relative w-full sm:w-auto flex-1 sm:flex-none">
               <SearchIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 opacity-50" />
               <input
                 type="text"
                 placeholder="Search verses..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 pr-4 py-2 bg-[#2A1B1A]/70 backdrop-blur-sm border border-[#D4A017]/50 rounded-xl text-[#F5E6CC] placeholder-[#F5E6CC]/50 focus:outline-none focus:border-[#D4A017] transition-all duration-400"
+                className="w-full sm:w-64 pl-10 pr-4 py-2 bg-[#2A1B1A]/70 backdrop-blur-sm border border-[#D4A017]/50 rounded-xl text-[#F5E6CC] placeholder-[#F5E6CC]/50 focus:outline-none focus:border-[#D4A017] transition-all duration-400 text-sm sm:text-base"
               />
             </div>
-            
+
             <div className="relative">
               <button
                 onClick={() => setDropdownOpen(dropdownOpen === "obfuscate" ? null : "obfuscate")}
-                className="flex items-center gap-2 px-4 py-2 bg-[#2A1B1A]/70 backdrop-blur-sm border border-[#D4A017]/50 rounded-xl hover:bg-[#2A1B1A]/90 transition-all duration-400"
+                className="flex items-center gap-2 px-3 py-2 bg-[#2A1B1A]/70 backdrop-blur-sm border border-[#D4A017]/50 rounded-xl hover:bg-[#2A1B1A]/90 transition-all duration-400 text-sm sm:text-base"
               >
                 <LockIcon />
                 Cipher
               </button>
-              
+
               {dropdownOpen === "obfuscate" && (
-                <div className="absolute top-full mt-2 right-0 bg-[#2A1B1A]/80 backdrop-blur-md border border-[#D4A017]/50 rounded-xl p-4 min-w-[240px] z-50 shadow-[0_4px_15px_rgba(0,0,0,0.3)]">
+                <div className="absolute top-full mt-2 right-0 bg-[#2A1B1A]/80 backdrop-blur-md border border-[#D4A017]/50 rounded-xl p-3 sm:p-4 min-w-[200px] sm:min-w-[240px] z-50 shadow-[0_4px_15px_rgba(0,0,0,0.3)]">
                   <div className="space-y-2">
                     {Object.entries({
                       none: "None (plain)",
@@ -578,7 +577,7 @@ function LUs() {
                       emoji: "Emoji Mask",
                       vigenere: "Vigenère"
                     }).map(([key, name]) => (
-                      <label key={key} className="flex items-center hover:bg-[#3C4F2F]/40 rounded-lg p-2 transition-all duration-400">
+                      <label key={key} className="flex items-center hover:bg-[#3C4F2F]/40 rounded-lg p-2 transition-all duration-400 text-sm">
                         <input
                           type="radio"
                           name="obfsMode"
@@ -590,24 +589,24 @@ function LUs() {
                         {name}
                       </label>
                     ))}
-                    
+
                     {obfsMode === "vigenere" && (
                       <input
                         type="text"
                         placeholder="Cipher key..."
                         value={vigenereKey}
                         onChange={(e) => setVigenereKey(e.target.value)}
-                        className="w-full mt-2 px-3 py-2 bg-[#2A1B1A]/70 border border-[#D4A017]/50 rounded-xl text-[#F5E6CC] placeholder-[#F5E6CC]/50 focus:outline-none focus:border-[#D4A017] transition-all duration-400"
+                        className="w-full mt-2 px-3 py-2 bg-[#2A1B1A]/70 border border-[#D4A017]/50 rounded-xl text-[#F5E6CC] placeholder-[#F5E6CC]/50 focus:outline-none focus:border-[#D4A017] transition-all duration-400 text-sm"
                       />
                     )}
                   </div>
                 </div>
               )}
             </div>
-            
+
             <button
               onClick={() => setShowContent(!showContent)}
-              className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all duration-400 ${
+              className={`flex items-center gap-2 px-3 py-2 rounded-xl transition-all duration-400 text-sm sm:text-base ${
                 showContent 
                   ? "bg-[#4A1C2A] text-[#F5E6CC]" 
                   : "bg-[#2A1B1A]/70 backdrop-blur-sm border border-[#D4A017]/50 hover:bg-[#2A1B1A]/90"
@@ -616,16 +615,16 @@ function LUs() {
               {showContent ? <EyeIcon /> : <EyeOffIcon />}
               Content
             </button>
-            
+
             <button
               onClick={exportData}
-              className="flex items-center gap-2 px-4 py-2 bg-[#2A1B1A]/70 backdrop-blur-sm border border-[#D4A017]/50 rounded-xl hover:bg-[#2A1B1A]/90 transition-all duration-400"
+              className="flex items-center gap-2 px-3 py-2 bg-[#2A1B1A]/70 backdrop-blur-sm border border-[#D4A017]/50 rounded-xl hover:bg-[#2A1B1A]/90 transition-all duration-400 text-sm sm:text-base"
             >
               <DownloadIcon />
               Export
             </button>
-            
-            <label className="flex items-center gap-2 px-4 py-2 bg-[#2A1B1A]/70 backdrop-blur-sm border border-[#D4A017]/50 rounded-xl hover:bg-[#2A1B1A]/90 transition-all duration-400 cursor-pointer">
+
+            <label className="flex items-center gap-2 px-3 py-2 bg-[#2A1B1A]/70 backdrop-blur-sm border border-[#D4A017]/50 rounded-xl hover:bg-[#2A1B1A]/90 transition-all duration-400 cursor-pointer text-sm sm:text-base">
               <UploadIcon />
               Import
               <input
@@ -641,59 +640,59 @@ function LUs() {
         {/* Entry Modal */}
         {showModal && (
           <div className="fixed inset-0 bg-[#2A1B1A]/60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-            <div className="bg-[#2A1B1A]/80 backdrop-blur-md rounded-2xl border border-[#D4A017]/50 p-8 max-w-2xl w-full max-h-[80vh] overflow-y-auto shadow-[0_4px_15px_rgba(0,0,0,0.3)]">
-              <h2 className="text-2xl font-bold mb-6 text-center text-[#F5E6CC]">Pour Your Soul into LU's</h2>
-              <p className="text-sm opacity-80 mb-6 text-center text-[#F5E6CC]/80">Encrypted on save. Only your passphrase unlocks the melody.</p>
-              
-              <div className="space-y-4">
+            <div className="bg-[#2A1B1A]/80 backdrop-blur-md rounded-2xl border border-[#D4A017]/50 p-4 sm:p-6 max-w-lg w-full max-h-[90vh] overflow-y-auto shadow-[0_4px_15px_rgba(0,0,0,0.3)]">
+              <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-center text-[#F5E6CC]">Pour Your Soul into LU's</h2>
+              <p className="text-xs sm:text-sm opacity-80 mb-4 sm:mb-6 text-center text-[#F5E6CC]/80">Encrypted on save. Only your passphrase unlocks the melody.</p>
+
+              <div className="space-y-3 sm:space-y-4">
                 <input
                   type="text"
                   placeholder="Verse Title..."
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  className="w-full p-4 bg-[#2A1B1A]/70 border border-[#D4A017]/50 rounded-xl text-[#F5E6CC] placeholder-[#F5E6CC]/50 focus:outline-none focus:border-[#D4A017] transition-all duration-400"
+                  className="w-full p-3 sm:p-4 bg-[#2A1B1A]/70 border border-[#D4A017]/50 rounded-xl text-[#F5E6CC] placeholder-[#F5E6CC]/50 focus:outline-none focus:border-[#D4A017] transition-all duration-400 text-sm sm:text-base"
                 />
-                
+
                 <textarea
                   placeholder="Whispers of thoughts, waiting to be penned."
                   value={content}
                   onChange={(e) => setContent(e.target.value)}
-                  rows={12}
-                  className="w-full p-4 bg-[#2A1B1A]/70 border border-[#D4A017]/50 rounded-xl text-[#F5E6CC] placeholder-[#F5E6CC]/50 focus:outline-none focus:border-[#D4A017] transition-all duration-400 resize-none"
+                  rows={8}
+                  className="w-full p-3 sm:p-4 bg-[#2A1B1A]/70 border border-[#D4A017]/50 rounded-xl text-[#F5E6CC] placeholder-[#F5E6CC]/50 focus:outline-none focus:border-[#D4A017] transition-all duration-400 resize-none text-sm sm:text-base"
                 />
-                
+
                 <div className="flex items-center gap-2">
                   <TagsIcon />
                   <input
                     type="text"
-                    placeholder="tags, like poetry in a bottle, waiting to be read."
+                    placeholder="tags, like poetry in a bottle..."
                     value={tags}
                     onChange={(e) => setTags(e.target.value)}
-                    className="flex-1 p-4 bg-[#2A1B1A]/70 border border-[#D4A017]/50 rounded-xl text-[#F5E6CC] placeholder-[#F5E6CC]/50 focus:outline-none focus:border-[#D4A017] transition-all duration-400"
+                    className="flex-1 p-3 sm:p-4 bg-[#2A1B1A]/70 border border-[#D4A017]/50 rounded-xl text-[#F5E6CC] placeholder-[#F5E6CC]/50 focus:outline-none focus:border-[#D4A017] transition-all duration-400 text-sm sm:text-base"
                   />
                 </div>
-                
+
                 <div className="flex items-center gap-2">
                   <LockIcon />
                   <input
                     type="password"
-                    placeholder="passphrase (your secret chord) -password-"
+                    placeholder="passphrase (your secret chord)"
                     value={passphrase}
                     onChange={(e) => setPassphrase(e.target.value)}
-                    className="flex-1 p-4 bg-[#2A1B1A]/70 border border-[#D4A017]/50 rounded-xl text-[#F5E6CC] placeholder-[#F5E6CC]/50 focus:outline-none focus:border-[#D4A017] transition-all duration-400"
+                    className="flex-1 p-3 sm:p-4 bg-[#2A1B1A]/70 border border-[#D4A017]/50 rounded-xl text-[#F5E6CC] placeholder-[#F5E6CC]/50 focus:outline-none focus:border-[#D4A017] transition-all duration-400 text-sm sm:text-base"
                   />
                 </div>
-                
-                <div className="flex justify-end gap-2 pt-4">
+
+                <div className="flex justify-end gap-2 pt-3 sm:pt-4">
                   <button
                     onClick={() => setShowModal(false)}
-                    className="px-6 py-3 bg-[#2A1B1A]/70 rounded-xl hover:bg-[#2A1B1A]/90 text-[#F5E6CC] transition-all duration-400"
+                    className="px-4 sm:px-6 py-2 sm:py-3 bg-[#2A1B1A]/70 rounded-xl hover:bg-[#2A1B1A]/90 text-[#F5E6CC] transition-all duration-400 text-sm sm:text-base"
                   >
                     Cancel
                   </button>
                   <button
                     onClick={handleAddEntry}
-                    className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#4A1C2A] to-[#3C4F2F] rounded-xl hover:from-[#3C2F2F] hover:to-[#2A3D1F] text-[#F5E6CC] transition-all duration-400 transform hover:scale-105 shadow-[0_4px_15px_rgba(0,0,0,0.3)]"
+                    className="flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-[#4A1C2A] to-[#3C4F2F] rounded-xl hover:from-[#3C2F2F] hover:to-[#2A3D1F] text-[#F5E6CC] transition-all duration-400 transform hover:scale-105 shadow-[0_4px_15px_rgba(0,0,0,0.3)] text-sm sm:text-base"
                   >
                     <ShieldCheckIcon />
                     Save encrypted
@@ -705,37 +704,37 @@ function LUs() {
         )}
 
         {/* Entries Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {filteredEntries.map((entry, index) => (
             <div
               key={entry.id}
-              className="group bg-[#2A1B1A]/70 backdrop-blur-md rounded-2xl border border-[#D4A017]/50 p-6 hover:bg-[#2A1B1A]/90 transition-all duration-400 transform hover:scale-105 shadow-[0_4px_15px_rgba(0,0,0,0.3)]"
+              className="group bg-[#2A1B1A]/70 backdrop-blur-md rounded-2xl border border-[#D4A017]/50 p-4 sm:p-6 hover:bg-[#2A1B1A]/90 transition-all duration-400 transform hover:scale-105 shadow-[0_4px_15px_rgba(0,0,0,0.3)]"
               style={{
                 animationDelay: `${index * 100}ms`
               }}
             >
               <div className="flex justify-between items-start mb-4">
-                <h3 className="text-xl font-bold line-clamp-2 group-hover:text-[#D4A017] transition-all duration-400">
+                <h3 className="text-lg sm:text-xl font-bold line-clamp-2 group-hover:text-[#D4A017] transition-all duration-400">
                   {entry.title}
                 </h3>
                 <button
                   onClick={() => handleDelete(entry.id)}
-                  className="opacity-0 group-hover:opacity-100 p-2 hover:bg-[#4A1C2A]/50 rounded-lg transition-all duration-400"
+                  className="p-2 bg-[#4A1C2A]/50 hover:bg-[#4A1C2A]/70 rounded-lg transition-all duration-400"
                 >
                   <TrashIcon />
                 </button>
               </div>
-              
+
               <div className="mb-4">
                 {/* Unlock bar */}
                 {unlockedId !== entry.id ? (
-                  <div className="flex items-center gap-2 mb-3">
+                  <div className="flex flex-col sm:flex-row items-center gap-2 mb-3">
                     <input
                       type="password"
                       placeholder="passphrase to unlock the verse"
                       value={unlockPass}
                       onChange={(e) => setUnlockPass(e.target.value)}
-                      className="flex-1 px-3 py-2 bg-[#2A1B1A]/70 border border-[#D4A017]/50 rounded-xl text-[#F5E6CC] placeholder-[#F5E6CC]/50 focus:outline-none focus:border-[#D4A017] transition-all duration-400"
+                      className="flex-1 px-3 py-2 bg-[#2A1B1A]/70 border border-[#D4A017]/50 rounded-xl text-[#F5E6CC] placeholder-[#F5E6CC]/50 focus:outline-none focus:border-[#D4A017] transition-all duration-400 text-sm sm:text-base"
                     />
                     <button
                       onClick={() => {
@@ -746,21 +745,21 @@ function LUs() {
                           alert("Wrong passphrase");
                         }
                       }}
-                      className="flex items-center gap-1 px-3 py-2 bg-[#4A1C2A] text-[#F5E6CC] rounded-xl hover:bg-[#3C2F2F] transition-all duration-400"
+                      className="flex items-center gap-1 px-3 py-2 bg-[#4A1C2A] text-[#F5E6CC] rounded-xl hover:bg-[#3C2F2F] transition-all duration-400 text-sm sm:text-base"
                     >
                       <UnlockIcon />
                       Unlock
                     </button>
                   </div>
                 ) : (
-                  <div className="flex items-center gap-2 mb-3">
+                  <div className="flex flex-wrap items-center gap-2 mb-3">
                     <span className="flex items-center gap-1 px-2 py-1 bg-[#3C4F2F]/40 text-[#90EE90] text-xs rounded-xl">
                       <UnlockIcon />
                       Unlocked
                     </span>
                     <button
                       onClick={() => { setUnlockedId(null); setUnlockPass(""); }}
-                      className="flex items-center gap-1 px-2 py-1 text-sm hover:bg-[#2A1B1A]/90 rounded-xl transition-all duration-400"
+                      className="flex items-center gap-1 px-2 py-1 text-xs sm:text-sm hover:bg-[#2A1B1A]/90 rounded-xl transition-all duration-400"
                     >
                       <LockIcon />
                       Lock
@@ -777,15 +776,15 @@ function LUs() {
                         setEntries(newEntries);
                         saveEntries(newEntries); // Force immediate save
                       }}
-                      className="flex items-center gap-1 px-2 py-1 text-sm hover:bg-[#2A1B1A]/90 rounded-xl transition-all duration-400"
+                      className="flex items-center gap-1 px-2 py-1 text-xs sm:text-sm hover:bg-[#2A1B1A]/90 rounded-xl transition-all duration-400"
                     >
                       <RefreshCwIcon />
                       Change Pass
                     </button>
                   </div>
                 )}
-                
-                <div className={`${settings.blurPreview && showContent ? "blur-sm hover:blur-none transition-all duration-400" : ""} whitespace-pre-wrap leading-relaxed rounded-xl p-3 border border-[#D4A017]/50 bg-[#2A1B1A]/50`}>
+
+                <div className={`${settings.blurPreview && showContent ? "blur-sm hover:blur-none transition-all duration-400" : ""} whitespace-pre-wrap leading-relaxed rounded-xl p-3 border border-[#D4A017]/50 bg-[#2A1B1A]/50 text-sm sm:text-base`}>
                   {(() => {
                     let text = "(locked)";
                     if (unlockedId === entry.id) {
@@ -800,20 +799,20 @@ function LUs() {
                   })()}
                 </div>
               </div>
-              
+
               {entry.tags && entry.tags.length > 0 && (
                 <div className="flex flex-wrap gap-2 mb-4">
                   {entry.tags.map((tag, tagIndex) => (
                     <span
                       key={tagIndex}
-                      className={`px-3 py-1 ${chipColor(settings.theme)} rounded-xl text-xs`}
+                      className={`px-2 sm:px-3 py-1 ${chipColor(settings.theme)} rounded-xl text-xs`}
                     >
                       #{tag}
                     </span>
                   ))}
                 </div>
               )}
-              
+
               <div className="flex justify-between items-center text-xs opacity-60">
                 <span>{formatDate(entry.createdAt)}</span>
                 <span>{entry.wordCount} words</span>
@@ -823,27 +822,27 @@ function LUs() {
         </div>
 
         {entries.length === 0 && (
-          <div className="text-center py-20">
-            <BookOpenIcon className="w-16 h-16 mx-auto mb-4 opacity-50" />
-            <h3 className="text-2xl font-bold mb-2 opacity-70">Welcome to LU's Lounge</h3>
-            <p className="text-lg opacity-50">
+          <div className="text-center py-16 sm:py-20">
+            <BookOpenIcon className="w-12 sm:w-16 h-12 sm:h-16 mx-auto mb-4 opacity-50" />
+            <h3 className="text-xl sm:text-2xl font-bold mb-2 opacity-70">Welcome to LU's Lounge</h3>
+            <p className="text-base sm:text-lg opacity-50">
               Sip your thoughts and let the jazz flow. Start your first verse.
             </p>
           </div>
         )}
 
         {filteredEntries.length === 0 && entries.length > 0 && (
-          <div className="text-center py-20">
-            <SearchIcon className="w-16 h-16 mx-auto mb-4 opacity-50" />
-            <h3 className="text-2xl font-bold mb-2 opacity-70">No Verses Found</h3>
-            <p className="text-lg opacity-50">
+          <div className="text-center py-16 sm:py-20">
+            <SearchIcon className="w-12 sm:w-16 h-12 sm:h-16 mx-auto mb-4 opacity-50" />
+            <h3 className="text-xl sm:text-2xl font-bold mb-2 opacity-70">No Verses Found</h3>
+            <p className="text-base sm:text-lg opacity-50">
               Adjust your search or pour a new martini of words.
             </p>
           </div>
         )}
 
         {/* Footer note */}
-        <div className="mt-16 text-xs opacity-60 text-center">
+        <div className="mt-12 sm:mt-16 text-xs sm:text-sm opacity-60 text-center">
           <p>Tip: Savor your verses in ciphers (ROT13, Atbash, Emoji). For true secrecy, trust your passphrase.</p>
         </div>
       </div>

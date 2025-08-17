@@ -4,6 +4,7 @@ import tailwindcss from '@tailwindcss/postcss';
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: '/jornalofsec/',
   plugins: [react()],
   css: {
     postcss: {
